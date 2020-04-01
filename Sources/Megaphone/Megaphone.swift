@@ -1,6 +1,6 @@
 //
-//  Megaphone.swift
-//  Megaphone
+//  DarwinNotificationCenter.swift
+//  DarwinNotificationCenter
 //
 //  Copyright (c) 2019 Jason Nam (https://jasonnam.com)
 //
@@ -25,9 +25,9 @@
 
 import Foundation
 
-open class Megaphone {
+open class DarwinNotificationCenter {
 
-    public static let `default` = Megaphone()
+    public static let `default` = DarwinNotificationCenter()
 
     open func addObserver(forName name: Notification.Name) {
         let callback: CFNotificationCallback  = { _, _, name, _, _ in
