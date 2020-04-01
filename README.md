@@ -30,4 +30,4 @@ pod 'DarwinNotificationCenter'
 
 ## License
 
-DarwinNotificationCenter is released under the MIT license. [See LICENSE](https://github.com/jasonnam/Megaphone/blob/master/LICENSE) for details.
+DarwinNotificationCenter is released under the MIT license. [See LICENSE](https://github.com/jasonnam/DarwinNotificationCenter/blob/master/LICENSE) for details.
