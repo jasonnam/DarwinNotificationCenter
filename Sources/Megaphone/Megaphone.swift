@@ -25,14 +25,18 @@
 
 import Foundation
 
-open class DarwinNotificationCenter {
+public class DarwinNotificationCenter {
 
     public static let `default` = DarwinNotificationCenter()
 
-    open func addObserver(forName name: String) {
+    public private(set) var observations: [String: (String) -> Void] = [:]
+
+    public func addObserver(forName name: String, using block: @escaping (String) -> Void) {
+        observations[name] = block
+
         let callback: CFNotificationCallback  = { _, _, name, _, _ in
-            guard let name = name else { return }
-            NotificationCenter.default.post(name: .init(name.rawValue as String), object: nil)
+            guard let name = name?.rawValue as String? else { return }
+            DarwinNotificationCenter.default.observations[name]?(name)
         }
 
         CFNotificationCenterAddObserver(
@@ -45,7 +49,9 @@ open class DarwinNotificationCenter {
         )
     }
 
-    open func removeObserver(withName name: String) {
+    public func removeObserver(withName name: String) {
+        observations.removeValue(forKey: name)
+
         CFNotificationCenterRemoveObserver(
             CFNotificationCenterGetDarwinNotifyCenter(),
             Unmanaged.passUnretained(self).toOpaque(),
@@ -54,14 +60,14 @@ open class DarwinNotificationCenter {
         )
     }
 
-    open func removeAllObservers() {
+    public func removeAllObservers() {
         CFNotificationCenterRemoveEveryObserver(
             CFNotificationCenterGetDarwinNotifyCenter(),
             Unmanaged.passUnretained(self).toOpaque()
         )
     }
 
-    open func post(name: String) {
+    public func post(name: String) {
         CFNotificationCenterPostNotification(
             CFNotificationCenterGetDarwinNotifyCenter(),
             CFNotificationName(name as CFString),
