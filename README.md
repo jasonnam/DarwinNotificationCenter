@@ -1,8 +1,8 @@
-# Megaphone
+# DarwinNotificationCenter
 
-[![GitHub release](https://img.shields.io/github/release/jasonnam/Megaphone.svg)](https://github.com/jasonnam/Megaphone/releases)
-[![CocoaPods](https://img.shields.io/cocoapods/v/Megaphone.svg)](https://cocoapods.org/pods/Megaphone)
-[![travis-ci build status](https://travis-ci.com/jasonnam/Megaphone.svg?branch=master)](https://travis-ci.com/jasonnam/Megaphone)
+[![GitHub release](https://img.shields.io/github/release/jasonnam/DarwinNotificationCenter.svg)](https://github.com/jasonnam/DarwinNotificationCenter/releases)
+[![CocoaPods](https://img.shields.io/cocoapods/v/DarwinNotificationCenter.svg)](https://cocoapods.org/pods/DarwinNotificationCenter)
+[![travis-ci build status](https://travis-ci.com/jasonnam/DarwinNotificationCenter.svg?branch=master)](https://travis-ci.com/jasonnam/DarwinNotificationCenter)
 
 Inter-process notification with Darwin notification center.
 
@@ -12,22 +12,22 @@ Inter-process notification with Darwin notification center.
 
 #### Swift Package Manager
 
-Add Megaphone to the dependencies value of your `Package.swift`.
+Add DarwinNotificationCenter to the dependencies value of your `Package.swift`.
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/jasonnam/Megaphone", from: "0.1.0")
+    .package(url: "https://github.com/jasonnam/DarwinNotificationCenter", from: "0.2.0")
 ]
 ```
 
 #### CocoaPods
 
-Add `Megaphone` to your `Podfile`.
+Add `DarwinNotificationCenter` to your `Podfile`.
 
 ```ruby
-pod 'Megaphone'
+pod 'DarwinNotificationCenter'
 ```
 
 ## License
 
-Megaphone is released under the MIT license. [See LICENSE](https://github.com/jasonnam/Megaphone/blob/master/LICENSE) for details.
+DarwinNotificationCenter is released under the MIT license. [See LICENSE](https://github.com/jasonnam/Megaphone/blob/master/LICENSE) for details.
