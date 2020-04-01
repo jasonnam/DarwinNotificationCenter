@@ -1,1 +1,1 @@
-workspace(name = "Megaphone")
+workspace(name = "DarwinNotificationCenter")
