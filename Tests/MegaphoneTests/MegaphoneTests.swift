@@ -1,6 +1,6 @@
 //
-//  MegaphoneTests.swift
-//  MegaphoneTests
+//  DarwinNotificationCenterTests.swift
+//  DarwinNotificationCenterTests
 //
 //  Copyright (c) 2019 Jason Nam (https://jasonnam.com)
 //
@@ -26,81 +26,66 @@
 import XCTest
 @testable import Megaphone
 
-final class MegaphoneTests: XCTestCase {
+final class DarwinNotificationCenterTests: XCTestCase {
 
-    private var megaphone: Megaphone!
-
-    override func setUp() {
-        super.setUp()
-        megaphone = .init()
+    override func tearDown() {
+        super.tearDown()
+        DarwinNotificationCenter.default.removeAllObservers()
     }
 
     func testAddObserver() {
-        let notificationName = Notification.Name(rawValue: "testAddObserver")
-
-        megaphone.addObserver(forName: notificationName)
+        let notificationName = "testAddObserver"
 
         let expectation = self.expectation(description: "Observe test notification")
 
-        let observer = NotificationCenter.default.addObserver(forName: notificationName, object: nil, queue: .main) { _ in
+        DarwinNotificationCenter.default.addObserver(forName: notificationName) { name in
+            XCTAssertEqual(name, notificationName)
             expectation.fulfill()
         }
 
-        megaphone.post(name: notificationName)
+        DarwinNotificationCenter.default.post(name: notificationName)
 
         waitForExpectations(timeout: 1, handler: nil)
-
-        NotificationCenter.default.removeObserver(observer)
     }
 
     func testRemoveObserver() {
-        let notificationName = Notification.Name(rawValue: "testRemoveObserver")
-
-        megaphone.addObserver(forName: notificationName)
+        let notificationName = "testRemoveObserver"
 
         let expectation = self.expectation(description: "Should not observe test notification")
         expectation.isInverted = true
 
-        let observer = NotificationCenter.default.addObserver(forName: notificationName, object: nil, queue: .main) { _ in
+        DarwinNotificationCenter.default.addObserver(forName: notificationName) { _ in
             expectation.fulfill()
         }
 
-        megaphone.removeObserver(withName: notificationName)
+        DarwinNotificationCenter.default.removeObserver(withName: notificationName)
 
-        megaphone.post(name: notificationName)
+        DarwinNotificationCenter.default.post(name: notificationName)
 
         waitForExpectations(timeout: 1, handler: nil)
-
-        NotificationCenter.default.removeObserver(observer)
     }
 
     func testRemoveAllObservers() {
-        let notificationName1 = Notification.Name(rawValue: "testRemoveAllObservers1")
-        let notificationName2 = Notification.Name(rawValue: "testRemoveAllObservers2")
-
-        megaphone.addObserver(forName: notificationName1)
-        megaphone.addObserver(forName: notificationName2)
+        let notificationName1 = "testRemoveAllObservers1"
+        let notificationName2 = "testRemoveAllObservers2"
 
         let expectation1 = expectation(description: "Should not observe test notification 1")
         expectation1.isInverted = true
         let expectation2 = expectation(description: "Should not observe test notification 2")
         expectation2.isInverted = true
 
-        let observer1 = NotificationCenter.default.addObserver(forName: notificationName1, object: nil, queue: .main) { _ in
+        DarwinNotificationCenter.default.addObserver(forName: notificationName1) { _ in
             expectation1.fulfill()
         }
-        let observer2 = NotificationCenter.default.addObserver(forName: notificationName2, object: nil, queue: .main) { _ in
+        DarwinNotificationCenter.default.addObserver(forName: notificationName2) { _ in
             expectation2.fulfill()
         }
 
-        megaphone.removeAllObservers()
+        DarwinNotificationCenter.default.removeAllObservers()
 
-        megaphone.post(name: notificationName1)
-        megaphone.post(name: notificationName2)
+        DarwinNotificationCenter.default.post(name: notificationName1)
+        DarwinNotificationCenter.default.post(name: notificationName2)
 
         waitForExpectations(timeout: 1, handler: nil)
-
-        NotificationCenter.default.removeObserver(observer1)
-        NotificationCenter.default.removeObserver(observer2)
     }
 }
