@@ -29,7 +29,7 @@ open class DarwinNotificationCenter {
 
     public static let `default` = DarwinNotificationCenter()
 
-    open func addObserver(forName name: Notification.Name) {
+    open func addObserver(forName name: String) {
         let callback: CFNotificationCallback  = { _, _, name, _, _ in
             guard let name = name else { return }
             NotificationCenter.default.post(name: .init(name.rawValue as String), object: nil)
@@ -39,17 +39,17 @@ open class DarwinNotificationCenter {
             CFNotificationCenterGetDarwinNotifyCenter(),
             Unmanaged.passUnretained(self).toOpaque(),
             callback,
-            name.rawValue as CFString,
+            name as CFString,
             nil,
             .deliverImmediately
         )
     }
 
-    open func removeObserver(withName name: Notification.Name) {
+    open func removeObserver(withName name: String) {
         CFNotificationCenterRemoveObserver(
             CFNotificationCenterGetDarwinNotifyCenter(),
             Unmanaged.passUnretained(self).toOpaque(),
-            CFNotificationName(name.rawValue as CFString),
+            CFNotificationName(name as CFString),
             nil
         )
     }
@@ -61,10 +61,10 @@ open class DarwinNotificationCenter {
         )
     }
 
-    open func post(name: Notification.Name) {
+    open func post(name: String) {
         CFNotificationCenterPostNotification(
             CFNotificationCenterGetDarwinNotifyCenter(),
-            CFNotificationName(name.rawValue as CFString),
+            CFNotificationName(name as CFString),
             nil,
             nil,
             true
