@@ -23,8 +23,8 @@
 //  THE SOFTWARE.
 //
 
+@testable import DarwinNotificationCenter
 import XCTest
-@testable import Megaphone
 
 final class DarwinNotificationCenterTests: XCTestCase {
 
