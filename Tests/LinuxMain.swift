@@ -1,8 +1,8 @@
 import XCTest
 
-import MegaphoneTests
+import DarwinNotificationCenterTests
 
 var tests = [XCTestCaseEntry]()
-tests += MegaphoneTests.__allTests()
+tests += DarwinNotificationCenterTests.__allTests()
 
 XCTMain(tests)

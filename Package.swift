@@ -3,17 +3,17 @@
 import PackageDescription
 
 let package = Package(
-    name: "Megaphone",
+    name: "DarwinNotificationCenter",
     products: [
         .library(
-            name: "Megaphone",
-            targets: ["Megaphone"])
+            name: "DarwinNotificationCenter",
+            targets: ["DarwinNotificationCenter"])
     ],
     targets: [
         .target(
-            name: "Megaphone"),
+            name: "DarwinNotificationCenter"),
         .testTarget(
-            name: "MegaphoneTests",
-            dependencies: ["Megaphone"])
+            name: "DarwinNotificationCenterTests",
+            dependencies: ["DarwinNotificationCenter"])
     ]
 )

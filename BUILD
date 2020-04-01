@@ -4,9 +4,9 @@ load(
 )
 
 swift_library(
-    name = "Megaphone",
+    name = "DarwinNotificationCenter",
     srcs = glob([
-        "Sources/Megaphone/**/*.swift",
+        "Sources/DarwinNotificationCenter/**/*.swift",
     ]),
     visibility = [
         "//visibility:public",

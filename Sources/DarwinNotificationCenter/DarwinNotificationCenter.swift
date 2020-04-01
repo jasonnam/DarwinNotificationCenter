@@ -1,8 +1,8 @@
 //
-//  Megaphone.swift
-//  Megaphone
+//  DarwinNotificationCenter.swift
+//  DarwinNotificationCenter
 //
-//  Copyright (c) 2019 Jason Nam (https://jasonnam.com)
+//  Copyright (c) 2019 - 2020 Jason Nam (https://jasonnam.com)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,46 +25,52 @@
 
 import Foundation
 
-open class Megaphone {
+public class DarwinNotificationCenter {
 
-    public static let `default` = Megaphone()
+    public static let `default` = DarwinNotificationCenter()
 
-    open func addObserver(forName name: Notification.Name) {
+    public private(set) var observations: [String: (String) -> Void] = [:]
+
+    public func addObserver(forName name: String, using block: @escaping (String) -> Void) {
+        observations[name] = block
+
         let callback: CFNotificationCallback  = { _, _, name, _, _ in
-            guard let name = name else { return }
-            NotificationCenter.default.post(name: .init(name.rawValue as String), object: nil)
+            guard let name = name?.rawValue as String? else { return }
+            DarwinNotificationCenter.default.observations[name]?(name)
         }
 
         CFNotificationCenterAddObserver(
             CFNotificationCenterGetDarwinNotifyCenter(),
             Unmanaged.passUnretained(self).toOpaque(),
             callback,
-            name.rawValue as CFString,
+            name as CFString,
             nil,
             .deliverImmediately
         )
     }
 
-    open func removeObserver(withName name: Notification.Name) {
+    public func removeObserver(withName name: String) {
+        observations.removeValue(forKey: name)
+
         CFNotificationCenterRemoveObserver(
             CFNotificationCenterGetDarwinNotifyCenter(),
             Unmanaged.passUnretained(self).toOpaque(),
-            CFNotificationName(name.rawValue as CFString),
+            CFNotificationName(name as CFString),
             nil
         )
     }
 
-    open func removeAllObservers() {
+    public func removeAllObservers() {
         CFNotificationCenterRemoveEveryObserver(
             CFNotificationCenterGetDarwinNotifyCenter(),
             Unmanaged.passUnretained(self).toOpaque()
         )
     }
 
-    open func post(name: Notification.Name) {
+    public func post(name: String) {
         CFNotificationCenterPostNotification(
             CFNotificationCenterGetDarwinNotifyCenter(),
-            CFNotificationName(name.rawValue as CFString),
+            CFNotificationName(name as CFString),
             nil,
             nil,
             true
